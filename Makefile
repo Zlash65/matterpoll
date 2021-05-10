@@ -22,32 +22,32 @@ ifneq ($(wildcard build/custom.mk),)
 endif
 
 ## Checks the code style, tests, builds and bundles the plugin.
-all: check-style test dist
+all: test dist
 
 ## Propagates plugin manifest information into the server/ and webapp/ folders as required.
 .PHONY: apply
 apply:
 	./build/bin/manifest apply
 
-## Runs golangci-lint and eslint.
-.PHONY: check-style
-check-style: webapp/.npminstall golangci-lint
-	@echo Checking for style guide compliance
+# ## Runs golangci-lint and eslint.
+# .PHONY: check-style
+# check-style: webapp/.npminstall golangci-lint
+# 	@echo Checking for style guide compliance
 
-ifneq ($(HAS_WEBAPP),)
-	cd webapp && npm run lint
-endif
+# ifneq ($(HAS_WEBAPP),)
+# 	cd webapp && npm run lint
+# endif
 
-## Run golangci-lint on codebase.
-.PHONY: golangci-lint
-golangci-lint:
-	@if ! [ -x "$$(command -v golangci-lint)" ]; then \
-		echo "golangci-lint is not installed. Please see https://github.com/golangci/golangci-lint#install for installation instructions."; \
-		exit 1; \
-	fi; \
+# ## Run golangci-lint on codebase.
+# .PHONY: golangci-lint
+# golangci-lint:
+# 	@if ! [ -x "$$(command -v golangci-lint)" ]; then \
+# 		echo "golangci-lint is not installed. Please see https://github.com/golangci/golangci-lint#install for installation instructions."; \
+# 		exit 1; \
+# 	fi; \
 
-	@echo Running golangci-lint
-	golangci-lint run ./...
+# 	@echo Running golangci-lint
+# 	golangci-lint run ./...
 
 ## Builds the server, if it exists, including support for multiple architectures.
 .PHONY: server
